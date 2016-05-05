@@ -5,6 +5,7 @@
     "dotnet-test-xunit": "1.0.0-*",
     "Microsoft.IdentityModel.Protocols.OpenIdConnect": "2.0.0-*",
     "Microsoft.NETCore.Platforms": "1.0.1-*",
+    "dotnet-test-xunit": "1.0.0-*",
     "System.IdentityModel.Tokens.Saml": "5.0.0-*",
     "xunit": "2.1.0"
   },
