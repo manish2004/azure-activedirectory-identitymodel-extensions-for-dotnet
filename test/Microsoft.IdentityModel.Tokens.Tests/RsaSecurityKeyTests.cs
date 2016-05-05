@@ -109,7 +109,7 @@ namespace Microsoft.IdentityModel.Tokens.Tests
         public void IsSupportedAlgorithm()
         {
             Assert.True(KeyingMaterial.RsaSecurityKeyWithCspProvider_2048.IsSupportedAlgorithm(SecurityAlgorithms.RsaSha256Signature), "KeyingMaterial.RsaSecurityKeyWithCspProvider_2048.IsSupportedAlgorithm returned false for rsasha256");
-            Assert.True(KeyingMaterial.RsaSecurityKeyWithCngProvider_2048_Public.IsSupportedAlgorithm(SecurityAlgorithms.RsaSha256), "KeyingMaterial.RsaSecurityKeyWithCngProvider_2048_Public.IsSupportedAlgorithm returned false for rsasha256");
+            Assert.True(KeyingMaterial.RsaSecurityKeyWithCspProvider_2048_Public.IsSupportedAlgorithm(SecurityAlgorithms.RsaSha256), "KeyingMaterial.RsaSecurityKeyWithCspProvider_2048_Public.IsSupportedAlgorithm returned false for rsasha256");
             Assert.True(!KeyingMaterial.RsaSecurityKeyWithCspProvider_2048.IsSupportedAlgorithm(SecurityAlgorithms.EcdsaSha256), "KeyingMaterial.RsaSecurityKeyWithCspProvider_2048 should not support ecdsa256");
             Assert.True(KeyingMaterial.RsaSecurityKey_2048.IsSupportedAlgorithm(SecurityAlgorithms.RsaSha256Signature), "KeyingMaterial.RsaSecurityKey_2048.IsSupportedAlgorithm returned false for rsasha256");
         }
