@@ -127,6 +127,10 @@ namespace Microsoft.IdentityModel.Tokens
                 return CryptoProviderFactory.CreateForSigning(this, algorithm);
         }
 
+        /// <summary>
+        /// true if this <see cref="X509SecurityKey"/> supports the algorithm; otherwise, false.
+        /// </summary>
+        /// <param name="algorithm">the crypto algorithm to use.</param>
         public override bool IsSupportedAlgorithm(string algorithm)
         {
             if (string.IsNullOrEmpty(algorithm))

@@ -27,8 +27,14 @@
 
 namespace Microsoft.IdentityModel.Tokens
 {
+    /// <summary>
+    /// base class for Asymmetric Security Key.
+    /// </summary>
     public abstract class AsymmetricSecurityKey : SecurityKey
     {
+        /// <summary>
+        /// true if there is a private key; otherwise, false.
+        /// </summary>
         public abstract bool HasPrivateKey { get; }
 
     }

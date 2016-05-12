@@ -65,6 +65,10 @@ namespace Microsoft.IdentityModel.Tokens
                 return factory.CreateForSigning(this, algorithm);
         }
 
+        /// <summary>
+        /// true if this <see cref="SymmetricSecurityKey"/> supports the algorithm; otherwise, false.
+        /// </summary>
+        /// <param name="algorithm">the crypto algorithm to use.</param>
         public override bool IsSupportedAlgorithm(string algorithm)
         {
             if (string.IsNullOrWhiteSpace(algorithm))

@@ -30,33 +30,59 @@ using Microsoft.IdentityModel.Logging;
 
 namespace Microsoft.IdentityModel.Tokens
 {
+    /// <summary>
+    /// base class for Security Key.
+    /// </summary>
     public abstract class SecurityKey
     {
         private CryptoProviderFactory _cryptoProviderFactory = CryptoProviderFactory.Default;
 
+        /// <summary>
+        /// Gets the size of this <see cref="SecurityKey"/>.
+        /// </summary>
         public abstract int KeySize { get; }
 
+        /// <summary>
+        /// Gets the key id of this <see cref="SecurityKey"/>.
+        /// </summary>
         public string KeyId { get; set; }
 
+
+        /// <summary>
+        /// Creates a <see cref="SignatureProvider"/> instance that supports the algorithm.
+        /// </summary>
+        /// <param name="algorithm">the algorithm to use for signing.</param>
         public SignatureProvider GetSignatureProviderForSigning(string algorithm)
         {
             return GetSignatureProvider(algorithm, false);
         }
 
+        /// <summary>
+        /// Creates a <see cref="SignatureProvider"/> instance that supports the algorithm.
+        /// </summary>
+        /// <param name="algorithm">the algorithm to use for verifying.</param>
+        /// <returns></returns>
         public SignatureProvider GetSignatureProviderForVerifying(string algorithm)
         {
             return GetSignatureProvider(algorithm, true);
         }
 
+        /// <summary>
+        /// Returns a <see cref="SignatureProvider"/> instance that supports the algorithm.
+        /// </summary>
+        /// <param name="algorithm">the algorithm to use for verifying/signing.</param>
+        /// <param name="verifyOnly">This value has to be false if need create Signatures.</param>
         public abstract SignatureProvider GetSignatureProvider(string algorithm, bool verifyOnly);
 
         /// <summary>
-        /// Answers if this <see cref="SecurityKey"/> supports the algorithm.
+        /// true if this <see cref="SecurityKey"/> supports the algorithm; otherwise, false.
         /// </summary>
         /// <param name="algorithm">the crypto algorithm to use.</param>
-        /// <returns>'true' if algorithm is supported.</returns>
         public abstract bool IsSupportedAlgorithm(string algorithm);
 
+        /// <summary>
+        /// Gets or sets <see cref="Microsoft.IdentityModel.Tokens.CryptoProviderFactory"/>.
+        /// </summary>
         public CryptoProviderFactory CryptoProviderFactory
         {
             get

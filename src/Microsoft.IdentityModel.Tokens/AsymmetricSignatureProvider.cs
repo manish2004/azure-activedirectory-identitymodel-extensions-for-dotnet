@@ -86,11 +86,22 @@ namespace Microsoft.IdentityModel.Tokens
             { SecurityAlgorithms.RsaSha512Signature, 1024 }
         };
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AsymmetricSignatureProvider"/> class used to create and verify signatures.
+        /// </summary>
+        /// <param name="key">that will be used for cryptographic operations.</param>
+        /// <param name="algorithm">The signature algorithm to apply.</param>
         public AsymmetricSignatureProvider(SecurityKey key, string algorithm)
             : this(key, algorithm, false, null)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AsymmetricSignatureProvider"/> class used to create and verify signatures.
+        /// </summary>
+        /// <param name="key">that will be used for cryptographic operations.</param>
+        /// <param name="algorithm">The signature algorithm to apply.</param>
+        /// <param name="willCreateSignatures">If this <see cref="AsymmetricSignatureProvider"/> is required to create signatures then set this to true.</param>
         public AsymmetricSignatureProvider(SecurityKey key, string algorithm, bool willCreateSignatures)
             : this(key, algorithm, willCreateSignatures, null)
         {
@@ -110,10 +121,10 @@ namespace Microsoft.IdentityModel.Tokens
         /// </param>
         /// <exception cref="ArgumentNullException">'key' is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// willCreateSignatures is true and <see cref="SecurityKey"/>.KeySize is less than the size corresponding to the given algorithm in <see cref="CryptoProviderFactory.MinimumAsymmetricKeySizeInBitsForSigningMap"/>.
+        /// willCreateSignatures is true and <see cref="SecurityKey"/>.KeySize is less than the size corresponding to the given algorithm in <see cref="AsymmetricSignatureProvider.MinimumAsymmetricKeySizeInBitsForSigningMap"/>.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// <see cref="SecurityKey"/>.KeySize is less than the size corresponding to the algorithm in <see cref="CryptoProviderFactory.MinimumAsymmetricKeySizeInBitsForVerifyingMap"/>. Note: this is always checked.
+        /// <see cref="SecurityKey"/>.KeySize is less than the size corresponding to the algorithm in <see cref="AsymmetricSignatureProvider.MinimumAsymmetricKeySizeInBitsForVerifyingMap"/>. Note: this is always checked.
         /// </exception>
         /// <exception cref="ArgumentException">if 'algorithm" is not supported.</exception>
         /// <exception cref="ArgumentOutOfRangeException">if 'key' is not <see cref="RsaSecurityKey"/> or <see cref="X509SecurityKey"/>.</exception>
@@ -195,6 +206,10 @@ namespace Microsoft.IdentityModel.Tokens
         }
 
 #if NETSTANDARD1_4
+        /// <summary>
+        /// Returns the <see cref="HashAlgorithmName"/> instance.
+        /// </summary>
+        /// <param name="algorithm">The hash algorithm to use to create the hash value.</param>
         protected virtual HashAlgorithmName GetHashAlgorithmName(string algorithm)
         {
             if (string.IsNullOrWhiteSpace(algorithm))
@@ -304,6 +319,11 @@ namespace Microsoft.IdentityModel.Tokens
             throw LogHelper.LogException<ArgumentOutOfRangeException>(LogMessages.IDX10641, key);
         }
 #else
+        /// <summary>
+        /// Returns the algorithm name.
+        /// </summary>
+        /// <param name="algorithm">The hash algorithm to use to create the hash value.</param>
+        /// <returns></returns>
         protected virtual string GetHashAlgorithmString(string algorithm)
         {
             if (string.IsNullOrWhiteSpace(algorithm))
@@ -584,14 +604,14 @@ namespace Microsoft.IdentityModel.Tokens
         }
 
         /// <summary>
-        /// Produces a signature over the 'input' using the <see cref="AsymmetricSecurityKey"/> and algorithm passed to <see cref="AsymmetricSignatureProvider( AsymmetricSecurityKey, string, bool )"/>.
+        /// Produces a signature over the 'input' using the <see cref="AsymmetricSecurityKey"/> and algorithm passed to <see cref="AsymmetricSignatureProvider( SecurityKey, string, bool )"/>.
         /// </summary>
         /// <param name="input">bytes to be signed.</param>
         /// <returns>a signature over the input.</returns>
         /// <exception cref="ArgumentNullException">'input' is null. </exception>
         /// <exception cref="ArgumentException">'input.Length' == 0. </exception>
         /// <exception cref="ObjectDisposedException">if <see cref="AsymmetricSignatureProvider.Dispose(bool)"/> has been called. </exception>
-        /// <exception cref="InvalidOperationException">if the internal <see cref="AsymmetricSignatureFormatter"/> is null. This can occur if the constructor parameter 'willBeUsedforSigning' was not 'true'.</exception>
+        /// <exception cref="InvalidOperationException">if the internal <see cref="AsymmetricSignatureProvider"/> is null. This can occur if the constructor parameter 'willBeUsedforSigning' was not 'true'.</exception>
         /// <exception cref="InvalidOperationException">if the internal <see cref="HashAlgorithm"/> is null. This can occur if a derived type deletes it or does not create it.</exception>
         public override byte[] Sign(byte[] input)
         {
@@ -633,7 +653,7 @@ namespace Microsoft.IdentityModel.Tokens
         /// <exception cref="ArgumentException">'input.Length' == 0.</exception>
         /// <exception cref="ArgumentException">'signature.Length' == 0.</exception>
         /// <exception cref="ObjectDisposedException">if <see cref="AsymmetricSignatureProvider.Dispose(bool)"/> has been called. </exception>
-        /// <exception cref="InvalidOperationException">if the internal <see cref="AsymmetricSignatureDeformatter"/> is null. This can occur if a derived type does not call the base constructor.</exception>
+        /// <exception cref="InvalidOperationException">if the internal <see cref="AsymmetricSignatureProvider"/> is null. This can occur if a derived type does not call the base constructor.</exception>
         /// <exception cref="InvalidOperationException">if the internal <see cref="HashAlgorithm"/> is null. This can occur if a derived type deletes it or does not create it.</exception>
         public override bool Verify(byte[] input, byte[] signature)
         {

@@ -36,6 +36,7 @@ namespace Microsoft.IdentityModel.Tokens
     /// </summary>
     /// <param name="securityKey"><see cref="SecurityKey"/> to use for the crypto operations.</param>
     /// <param name="algorithm">algorithm to use for the crypto operations</param>
+    /// <param name="willCreateSignatures">If this <see cref="AsymmetricSignatureProvider"/> is required to create signatures then set this to true.</param>
     /// <returns><see cref="AsymmetricAlgorithm"/> to use for signing and/or verifying tokens.</returns>
     public delegate AsymmetricAlgorithm AsymmetricAlgorithmResolver(SecurityKey securityKey, string algorithm, bool willCreateSignatures);
 
@@ -45,6 +46,9 @@ namespace Microsoft.IdentityModel.Tokens
     /// </summary>
     public class CryptoProviderFactory
     {
+        /// <summary>
+        /// Returns a new <see cref="CryptoProviderFactory"/> instance.
+        /// </summary>
         public static CryptoProviderFactory Default;
 
         static CryptoProviderFactory()
@@ -80,7 +84,7 @@ namespace Microsoft.IdentityModel.Tokens
         /// Returns a <see cref="SignatureProvider"/> instance supports the <see cref="SecurityKey"/> and algorithm.
         /// </summary>
         /// <param name="key">the <see cref="SecurityKey"/> to use for signing.</param>
-        /// <param name="algorithm">the algorithm to use for signing.</param>
+        /// <param name="algorithm">the algorithm to use for verifying.</param>
         /// <exception cref="ArgumentNullException">'key' is null.</exception>
         /// <exception cref="ArgumentNullException">'algorithm' is null.</exception>
         /// <exception cref="ArgumentException">'algorithm' contains only whitespace.</exception>

@@ -230,6 +230,9 @@ namespace Microsoft.IdentityModel.Tokens
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, PropertyName = JsonWebKeyParameterNames.Y, Required = Required.Default)]
         public string Y { get; set; }
 
+        /// <summary>
+        /// Gets the key size of <see cref="JsonWebKey"/>.
+        /// </summary>
         public override int KeySize
         {
             get
@@ -245,6 +248,9 @@ namespace Microsoft.IdentityModel.Tokens
             }
         }
 
+        /// <summary>
+        /// true if there is a private key; otherwise, false.
+        /// </summary>
         public bool HasPrivateKey
         {
             get
@@ -257,6 +263,12 @@ namespace Microsoft.IdentityModel.Tokens
                     return false;
             }
         }
+
+        /// <summary>
+        /// Returns a <see cref="SignatureProvider"/> instance that supports the algorithm.
+        /// </summary>
+        /// <param name="algorithm">the algorithm to use for verifying/signing.</param>
+        /// <param name="verifyOnly">This value has to be false if need create Signatures.</param>
         public override SignatureProvider GetSignatureProvider(string algorithm, bool verifyOnly)
         {
             if (verifyOnly)
@@ -265,6 +277,10 @@ namespace Microsoft.IdentityModel.Tokens
                 return CryptoProviderFactory.CreateForSigning(this, algorithm);
         }
 
+        /// <summary>
+        /// true if this <see cref="JsonWebKey"/> supports the algorithm; otherwise, false.
+        /// </summary>
+        /// <param name="algorithm">the crypto algorithm to use.</param>
         public override bool IsSupportedAlgorithm(string algorithm)
         {
             if (string.IsNullOrEmpty(algorithm))

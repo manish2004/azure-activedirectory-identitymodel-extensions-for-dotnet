@@ -511,11 +511,13 @@ namespace Microsoft.IdentityModel.Tokens
         /// <summary>
         /// Gets or sets a boolean to control if the issuer will be validated during token validation.
         /// </summary>
-        /// <remarks>Validation of the issuer, mitigates a forwarding attacks that can occur when an
+        /// <remarks>
+        /// Validation of the issuer, mitigates a forwarding attacks that can occur when an
         /// IdentityProvider represents multiple tenants and signs tokens with the same keys.
         /// It is possible that a token issued for the same audience could be from a different tenant. For example an application could accept users from
         /// contoso.onmicrosoft.com but not fabrikam.onmicrosoft.com, both valid tenants. A application that accepts tokens from fabrikam could forward them
         /// to the application that accepts tokens for contoso.
+        /// </remarks>
         [DefaultValue(true)]
         public bool ValidateIssuer
         {
