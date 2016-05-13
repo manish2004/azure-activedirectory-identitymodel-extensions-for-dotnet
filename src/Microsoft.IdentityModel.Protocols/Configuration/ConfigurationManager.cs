@@ -77,6 +77,7 @@ namespace Microsoft.IdentityModel.Protocols
         /// Instantiaties a new <see cref="ConfigurationManager{T}"/> that manages automatic and controls refreshing on configuration data.
         /// </summary>
         /// <param name="metadataAddress">the address to obtain configuration.</param>
+        /// <param name="configRetriever">the IConfigurationRetriever</param>
         public ConfigurationManager(string metadataAddress, IConfigurationRetriever<T> configRetriever)
             : this(metadataAddress, configRetriever, new HttpDocumentRetriever())
         {
@@ -86,6 +87,7 @@ namespace Microsoft.IdentityModel.Protocols
         /// Instantiaties a new <see cref="ConfigurationManager{T}"/> that manages automatic and controls refreshing on configuration data.
         /// </summary>
         /// <param name="metadataAddress">the address to obtain configuration.</param>
+        /// <param name="configRetriever">the IConfigurationRetriever</param>
         /// <param name="httpClient">the client to use when obtaining configuration.</param>
         public ConfigurationManager(string metadataAddress, IConfigurationRetriever<T> configRetriever, HttpClient httpClient)
             : this(metadataAddress, configRetriever, new HttpDocumentRetriever(httpClient))
@@ -96,6 +98,7 @@ namespace Microsoft.IdentityModel.Protocols
         /// Instantiaties a new <see cref="ConfigurationManager{T}"/> that manages automatic and controls refreshing on configuration data.
         /// </summary>
         /// <param name="metadataAddress">the address to obtain configuration.</param>
+        /// <param name="configRetriever">the IConfigurationRetriever</param>
         /// <param name="docRetriever">the <see cref="IDocumentRetriever"/> that reaches out to obtain the configuration.</param>
         public ConfigurationManager(string metadataAddress, IConfigurationRetriever<T> configRetriever, IDocumentRetriever docRetriever)
         {

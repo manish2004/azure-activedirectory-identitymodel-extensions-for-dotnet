@@ -27,8 +27,14 @@
 
 namespace Microsoft.IdentityModel.Protocols.WsFederation
 {
+    /// <summary>
+    /// Serialize metedata.
+    /// </summary>
     public class MetadataSerializer
     {
+        /// <summary>
+        /// Gets or sets the <see cref="X509CertificateValidationMode"/>.
+        /// </summary>
         public X509CertificateValidationMode CertificateValidationMode { get; set; }
     }
 }

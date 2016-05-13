@@ -43,10 +43,17 @@ namespace Microsoft.IdentityModel.Protocols
         private HttpClient _httpClient;
         private static readonly HttpClient _defaultHttpClient = new HttpClient();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpDocumentRetriever"/> class.
+        /// </summary>
         public HttpDocumentRetriever()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpDocumentRetriever"/> class with a specified httpClient.
+        /// </summary>
+        /// <param name="httpClient"><see cref="HttpClient"/>></param>
         public HttpDocumentRetriever(HttpClient httpClient)
         {
             if (httpClient == null)
@@ -60,6 +67,12 @@ namespace Microsoft.IdentityModel.Protocols
         /// </summary>
         public bool RequireHttps { get; set; } = true;
 
+        /// <summary>
+        /// Obtains a document from an address.
+        /// </summary>
+        /// <param name="address">location of document</param>
+        /// <param name="cancel"><see cref="CancellationToken"/></param>
+        /// <returns>document as a string</returns>
         public async Task<string> GetDocumentAsync(string address, CancellationToken cancel)
         {
             if (string.IsNullOrWhiteSpace(address))

@@ -30,8 +30,18 @@ using System.Threading.Tasks;
 
 namespace Microsoft.IdentityModel.Protocols
 {
+    /// <summary>
+    /// Interface that defines methods to retriever populated configuration.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IConfigurationRetriever<T>
     {
+        /// <summary>
+        /// Retrieves a populated configuration given an address and an <see cref="IDocumentRetriever"/>.
+        /// </summary>
+        /// <param name="address">address of the discovery document.</param>
+        /// <param name="retriever">the <see cref="IDocumentRetriever"/> to use to read the discovery document.</param>
+        /// <param name="cancel"><see cref="CancellationToken"/>.</param>
         Task<T> GetConfigurationAsync(string address, IDocumentRetriever retriever, CancellationToken cancel);
     }
 }

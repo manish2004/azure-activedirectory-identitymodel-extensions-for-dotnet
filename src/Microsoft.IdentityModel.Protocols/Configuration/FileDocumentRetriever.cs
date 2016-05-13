@@ -38,6 +38,9 @@ namespace Microsoft.IdentityModel.Protocols
     /// </summary>
     public class FileDocumentRetriever : IDocumentRetriever
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileDocumentRetriever"/> class.
+        /// </summary>
         public FileDocumentRetriever()
         { }
 
