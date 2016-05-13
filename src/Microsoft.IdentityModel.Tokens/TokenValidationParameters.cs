@@ -170,6 +170,9 @@ namespace Microsoft.IdentityModel.Tokens
             ValidateLifetime = true;
         }
 
+        /// <summary>
+        /// Gets or sets <see cref="TokenValidationParameters"/>.
+        /// </summary>
         public TokenValidationParameters ActorValidationParameters
         {
             get; set;

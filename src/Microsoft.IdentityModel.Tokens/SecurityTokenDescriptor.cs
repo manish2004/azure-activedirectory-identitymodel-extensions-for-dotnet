@@ -30,20 +30,44 @@ using System.Security.Claims;
 
 namespace Microsoft.IdentityModel.Tokens
 {
+    /// <summary>
+    /// Contains some information which used to create a security token.
+    /// </summary>
     public class SecurityTokenDescriptor
     {
+        /// <summary>
+        /// Gets or sets the 'value' of the 'audience' claim.
+        /// </summary>
         public string Audience { get; set; }
 
+        /// <summary>
+        /// Gets or sets the 'value' of the 'expiration' claim.
+        /// </summary>
         public DateTime? Expires { get; set; }
 
+        /// <summary>
+        /// Gets or sets the Issuer of this <see cref="SecurityToken"/>.
+        /// </summary>
         public string Issuer { get; set; }
 
+        /// <summary>
+        /// Gets or sets the time of the security token was issued.
+        /// </summary>
         public DateTime? IssuedAt { get; set; }
 
+        /// <summary>
+        /// Gets or sets the notbefore time for the security token.
+        /// </summary>
         public DateTime? NotBefore { get; set; }
 
+        /// <summary>
+        /// Gets or sets the <see cref="SigningCredentials"/> used to create a security token.
+        /// </summary>
         public SigningCredentials SigningCredentials { get; set; }
 
+        /// <summary>
+        /// Gets or sets the <see cref="ClaimsIdentity"/>.
+        /// </summary>
         public ClaimsIdentity Subject { get; set; }
     }
 }

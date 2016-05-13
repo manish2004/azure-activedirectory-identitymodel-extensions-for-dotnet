@@ -35,6 +35,11 @@ namespace Microsoft.IdentityModel.Tokens
     /// </summary>
     public abstract class SignatureProvider : IDisposable
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SignatureProvider"/> class used to create and verify signatures.
+        /// </summary>
+        /// <param name="key">The <see cref="SecurityKey"/> that will be used for cryptographic operations.</param>
+        /// <param name="algorithm">The signature algorithm to apply.</param>
         protected SignatureProvider(SecurityKey key, string algorithm)
         {
             if (key == null)
@@ -53,8 +58,14 @@ namespace Microsoft.IdentityModel.Tokens
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="SecurityKey"/>.
+        /// </summary>
         public SecurityKey Key { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the signature algorithm.
+        /// </summary>
         public string Algorithm { get; private set; }
 
         /// <summary>

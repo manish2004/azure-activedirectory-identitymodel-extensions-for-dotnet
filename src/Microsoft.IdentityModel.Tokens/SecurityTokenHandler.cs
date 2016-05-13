@@ -42,11 +42,22 @@ namespace Microsoft.IdentityModel.Tokens
         {
         }
 
+        /// <summary>
+        /// Returns <see cref="SecurityKeyIdentifierClause"/>.
+        /// </summary>
+        /// <param name="token"><see cref="SecurityToken"/></param>
+        /// <param name="attached">true if attached; otherwise, false.</param>
+        /// <returns></returns>
         public virtual SecurityKeyIdentifierClause CreateSecurityTokenReference(SecurityToken token, bool attached)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Returns <see cref="SecurityToken"/>.
+        /// </summary>
+        /// <param name="tokenDescriptor"><see cref="SecurityTokenDescriptor"/></param>
+        /// <returns></returns>
         public virtual SecurityToken CreateToken(SecurityTokenDescriptor tokenDescriptor)
         {
             throw new NotImplementedException();
@@ -102,6 +113,11 @@ namespace Microsoft.IdentityModel.Tokens
             return null;
         }
 
+        /// <summary>
+        /// Gets security token.
+        /// </summary>
+        /// <param name="reader">The XML Reader.</param>
+        /// <remarks>You have to implement your own </remarks>
         public virtual SecurityToken ReadToken(XmlReader reader)
         {
             return null;
@@ -124,6 +140,12 @@ namespace Microsoft.IdentityModel.Tokens
         /// <param name="token">A token of type <see cref="TokenType"/>.</param>
         public abstract void WriteToken(XmlWriter writer, SecurityToken token);
 
+        /// <summary>
+        /// Deserializes token with the provided <see cref="TokenValidationParameters"/>.
+        /// </summary>
+        /// <param name="reader">The XML Reader.</param>
+        /// <param name="validationParameters">the current <see cref="TokenValidationParameters"/>.</param>
+        /// <returns></returns>
         public abstract SecurityToken ReadToken(XmlReader reader, TokenValidationParameters validationParameters);
     }
 }

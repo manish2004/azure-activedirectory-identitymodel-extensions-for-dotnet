@@ -29,11 +29,18 @@ using System;
 
 namespace Microsoft.IdentityModel.Tokens
 {
+    /// <summary>
+    /// Represents a symmetric security key.
+    /// </summary>
     public class SymmetricSecurityKey : SecurityKey
     {
         int _keySize;
         byte[] _key;
 
+        /// <summary>
+        /// Returns a new instance of <see cref="SymmetricSecurityKey"/>.
+        /// </summary>
+        /// <param name="key">the byte array of the key.</param>
         public SymmetricSecurityKey(byte[] key)
         {
             if (key == null)
@@ -50,11 +57,19 @@ namespace Microsoft.IdentityModel.Tokens
             _keySize = _key.Length * 8;
         }
 
+        /// <summary>
+        /// Gets the key size.
+        /// </summary>
         public override int KeySize
         {
             get { return _keySize; }
         }
 
+        /// <summary>
+        /// Returns a <see cref="SignatureProvider"/> instance that supports the algorithm.
+        /// </summary>
+        /// <param name="algorithm">the algorithm to use for verifying/signing.</param>
+        /// <param name="verifyOnly">This value has to be false if need create Signatures.</param>
         public override SignatureProvider GetSignatureProvider(string algorithm, bool verifyOnly)
         {
             var factory = this.CryptoProviderFactory ?? CryptoProviderFactory.Default;
@@ -89,6 +104,9 @@ namespace Microsoft.IdentityModel.Tokens
             }
         }
 
+        /// <summary>
+        /// the byte array of the key.
+        /// </summary>
         public virtual byte[] Key
         {
             get { return _key.CloneByteArray(); }

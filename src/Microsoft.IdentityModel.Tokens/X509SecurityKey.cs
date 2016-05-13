@@ -56,6 +56,9 @@ namespace Microsoft.IdentityModel.Tokens
             KeyId = certificate.Thumbprint;
         }
 
+        /// <summary>
+        /// Gets the key size.
+        /// </summary>
         public override int KeySize
         {
             get
@@ -64,6 +67,9 @@ namespace Microsoft.IdentityModel.Tokens
             }
         }
 
+        /// <summary>
+        /// Returns the private key from the <see cref="X509SecurityKey"/>.
+        /// </summary>
         public AsymmetricAlgorithm PrivateKey
         {
             get
@@ -88,6 +94,9 @@ namespace Microsoft.IdentityModel.Tokens
             }
         }
 
+        /// <summary>
+        /// Gets the public key from the <see cref="X509SecurityKey"/>.
+        /// </summary>
         public AsymmetricAlgorithm PublicKey
         {
             get
@@ -116,6 +125,12 @@ namespace Microsoft.IdentityModel.Tokens
             get { return _thisLock; }
         }
 
+        /// <summary>
+        /// Returns a <see cref="SignatureProvider"/> instance that supports the algorithm.
+        /// </summary>
+        /// <param name="algorithm">the algorithm to use for verifying/signing.</param>
+        /// <param name="verifyOnly">This value has to be false if need create Signatures.</param>
+        /// <returns></returns>
         public override SignatureProvider GetSignatureProvider(string algorithm, bool verifyOnly)
         {
             if (string.IsNullOrWhiteSpace(algorithm))

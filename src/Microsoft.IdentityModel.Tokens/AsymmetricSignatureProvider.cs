@@ -207,7 +207,7 @@ namespace Microsoft.IdentityModel.Tokens
 
 #if NETSTANDARD1_4
         /// <summary>
-        /// Returns the <see cref="HashAlgorithmName"/> instance.
+        /// Returns the <see cref="HashAlgorithmName"/>.
         /// </summary>
         /// <param name="algorithm">The hash algorithm to use to create the hash value.</param>
         protected virtual HashAlgorithmName GetHashAlgorithmName(string algorithm)

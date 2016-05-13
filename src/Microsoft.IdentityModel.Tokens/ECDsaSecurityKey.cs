@@ -100,7 +100,6 @@ namespace Microsoft.IdentityModel.Tokens
         /// </summary>
         /// <param name="algorithm">the algorithm to use for verifying/signing.</param>
         /// <param name="verifyOnly">This value has to be false if need create Signatures.</param>
-        /// <returns></returns>
         public override SignatureProvider GetSignatureProvider(string algorithm, bool verifyOnly)
         {
             if (verifyOnly)

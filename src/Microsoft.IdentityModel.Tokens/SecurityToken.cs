@@ -29,6 +29,9 @@ using System;
 
 namespace Microsoft.IdentityModel.Tokens
 {
+    /// <summary>
+    /// base class for security token.
+    /// </summary>
     public abstract class SecurityToken
     {
         /// <summary>

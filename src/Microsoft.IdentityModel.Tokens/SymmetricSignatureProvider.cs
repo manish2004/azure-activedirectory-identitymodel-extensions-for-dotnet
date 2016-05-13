@@ -57,10 +57,9 @@ namespace Microsoft.IdentityModel.Tokens
         /// <exception cref="ArgumentNullException">'key' is null.</exception>
         /// <exception cref="ArgumentNullException">'algorithm' is null.</exception>
         /// <exception cref="ArgumentException">'algorithm' contains only whitespace.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">'<see cref="SecurityKey"/>.KeySize' is smaller than <see cref="CryptoProviderFactory.MinimumSymmetricKeySizeInBits"/>.</exception>
-        /// <exception cref="InvalidOperationException"><see cref="SecurityKey.GetKeyedHashAlgorithm"/> throws.</exception>
-        /// <exception cref="InvalidOperationException"><see cref="SecurityKey.GetKeyedHashAlgorithm"/> returns null.</exception>
-        /// <exception cref="InvalidOperationException"><see cref="SecurityKey.GetSymmetricKey"/> throws.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">'<see cref="SecurityKey"/>.KeySize' is smaller than <see cref="SymmetricSignatureProvider.MinimumSymmetricKeySizeInBits"/>.</exception>
+        /// <exception cref="InvalidOperationException"><see cref="SymmetricSignatureProvider.GetKeyedHashAlgorithm"/> throws.</exception>
+        /// <exception cref="InvalidOperationException"><see cref="SymmetricSignatureProvider.GetKeyedHashAlgorithm"/> returns null.</exception>
         public SymmetricSignatureProvider(SecurityKey key, string algorithm)
             : base(key, algorithm)
         {
@@ -101,7 +100,7 @@ namespace Microsoft.IdentityModel.Tokens
         /// <summary>
         /// Gets or sets the minimum <see cref="SymmetricSecurityKey"/>.KeySize"/>.
         /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException">'value' is smaller than <see cref="AbsoluteMinimumSymmetricKeySizeInBits"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">'value' is smaller than <see cref="DefaultMinimumSymmetricKeySizeInBits"/>.</exception>
         public int MinimumSymmetricKeySizeInBits
         {
             get
@@ -118,6 +117,12 @@ namespace Microsoft.IdentityModel.Tokens
             }
         }
 
+        /// <summary>
+        /// Returns the <see cref="KeyedHashAlgorithm"/>.
+        /// </summary>
+        /// <param name="algorithm">The hash algorithm to use to create the hash value.</param>
+        /// <param name="key">the byte array of the key.</param>
+        /// <returns></returns>
         protected virtual KeyedHashAlgorithm GetKeyedHashAlgorithm(string algorithm, byte[] key)
         {
             if (string.IsNullOrWhiteSpace(algorithm))
@@ -143,7 +148,7 @@ namespace Microsoft.IdentityModel.Tokens
         }
 
         /// <summary>
-        /// Produces a signature over the 'input' using the <see cref="SymmetricSecurityKey"/> and 'algorithm' passed to <see cref="SymmetricSignatureProvider( SymmetricSecurityKey, string )"/>.
+        /// Produces a signature over the 'input' using the <see cref="SymmetricSecurityKey"/> and 'algorithm' passed to <see cref="SymmetricSignatureProvider( SecurityKey, string )"/>.
         /// </summary>
         /// <param name="input">bytes to sign.</param>
         /// <returns>signed bytes</returns>
@@ -171,7 +176,7 @@ namespace Microsoft.IdentityModel.Tokens
         }
 
         /// <summary>
-        /// Verifies that a signature created over the 'input' matches the signature. Using <see cref="SymmetricSecurityKey"/> and 'algorithm' passed to <see cref="SymmetricSignatureProvider( SymmetricSecurityKey, string )"/>.
+        /// Verifies that a signature created over the 'input' matches the signature. Using <see cref="SymmetricSecurityKey"/> and 'algorithm' passed to <see cref="SymmetricSignatureProvider( SecurityKey, string )"/>.
         /// </summary>
         /// <param name="input">bytes to verify.</param>
         /// <param name="signature">signature to compare against.</param>
