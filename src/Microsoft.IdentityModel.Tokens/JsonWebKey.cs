@@ -289,6 +289,9 @@ namespace Microsoft.IdentityModel.Tokens
             if (string.IsNullOrEmpty(algorithm))
                 return false;
 
+            if (CryptoProviderFactory.IsSupportedAlgorithm != null)
+                return CryptoProviderFactory.IsSupportedAlgorithm(this, algorithm);
+
             if (Kty == JsonWebAlgorithmsKeyTypes.RSA)
             {
                 switch (algorithm)

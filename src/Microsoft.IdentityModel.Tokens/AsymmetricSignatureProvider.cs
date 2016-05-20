@@ -134,9 +134,6 @@ namespace Microsoft.IdentityModel.Tokens
             if (key == null)
                 throw LogHelper.LogArgumentNullException("key");
 
-            if (!key.IsSupportedAlgorithm(algorithm))
-                throw LogHelper.LogException<ArgumentException>(LogMessages.IDX10640, (algorithm ?? "null"));
-
             _minimumAsymmetricKeySizeInBitsForSigningMap = new Dictionary<string, int>(DefaultMinimumAsymmetricKeySizeInBitsForSigningMap);
             _minimumAsymmetricKeySizeInBitsForVerifyingMap = new Dictionary<string, int>(DefaultMinimumAsymmetricKeySizeInBitsForVerifyingMap);
             ValidateAsymmetricSecurityKeySize(key, algorithm, willCreateSignatures);
@@ -166,6 +163,9 @@ namespace Microsoft.IdentityModel.Tokens
             }
             else
             {
+                if (!key.IsSupportedAlgorithm(algorithm))
+                    throw LogHelper.LogException<ArgumentException>(LogMessages.IDX10640, (algorithm ?? "null"));
+
                 ResolveAsymmetricAlgorithm(key, algorithm, willCreateSignatures);
             }
         }
@@ -698,7 +698,7 @@ namespace Microsoft.IdentityModel.Tokens
         /// <param name="key">The asymmetric key to validate</param>
         /// <param name="algorithm">Algorithm for which this key will be used</param>
         /// <param name="willCreateSignatures">Whether they key will be used for creating signatures</param>
-        public void ValidateAsymmetricSecurityKeySize(SecurityKey key, string algorithm, bool willCreateSignatures)
+        public virtual void ValidateAsymmetricSecurityKeySize(SecurityKey key, string algorithm, bool willCreateSignatures)
         {
             if (willCreateSignatures)
             {

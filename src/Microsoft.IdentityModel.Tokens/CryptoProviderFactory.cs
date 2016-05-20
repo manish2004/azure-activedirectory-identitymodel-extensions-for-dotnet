@@ -41,6 +41,14 @@ namespace Microsoft.IdentityModel.Tokens
     public delegate AsymmetricAlgorithm AsymmetricAlgorithmResolver(SecurityKey securityKey, string algorithm, bool willCreateSignatures);
 
     /// <summary>
+    /// Delegate to check if the <see cref="SecurityKey"/> supports the given algorithm.
+    /// </summary>
+    /// <param name="securityKey"><see cref="SecurityKey"/> to check.</param>
+    /// <param name="algorithm">algorithm to check.</param>
+    /// <returns> true, if algorithm is supported by the key, false otherwise.</returns>
+    public delegate bool IsSupportedAlgorithm(SecurityKey securityKey, string algorithm);
+
+    /// <summary>
     /// Creates <see cref="SignatureProvider"/>s by specifying a <see cref="SecurityKey"/> and algorithm.
     /// <para>Supports both <see cref="AsymmetricSecurityKey"/> and <see cref="SymmetricSecurityKey"/>.</para>
     /// </summary>
@@ -60,6 +68,8 @@ namespace Microsoft.IdentityModel.Tokens
         /// Delegate to resolve <see cref="AsymmetricAlgorithm"/> to use when signing or verifying token.
         /// </summary>
         public AsymmetricAlgorithmResolver AsymmetricAlgorithmResolver { get; set; }
+
+        public IsSupportedAlgorithm IsSupportedAlgorithm { get; set; }
 
         /// <summary>
         /// Creates a <see cref="SignatureProvider"/> that supports the <see cref="SecurityKey"/> and algorithm.
