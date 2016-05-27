@@ -35,7 +35,7 @@ namespace Microsoft.IdentityModel.Tokens
     /// </summary>
     public abstract class SecurityKey
     {
-        private CryptoProviderFactory _cryptoProviderFactory = CryptoProviderFactory.Default;
+        private CryptoProviderFactory _cryptoProviderFactory = new CryptoProviderFactory(CryptoProviderFactory.Default);
 
         /// <summary>
         /// This must be overridden to get the size of this <see cref="SecurityKey"/>.

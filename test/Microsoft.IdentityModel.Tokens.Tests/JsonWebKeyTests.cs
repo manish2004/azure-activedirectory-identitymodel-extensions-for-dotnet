@@ -160,6 +160,13 @@ namespace Microsoft.IdentityModel.Tokens.Tests
                 dataset.Add(KeyingMaterial.JsonWebKeyRsa256, SecurityAlgorithms.EcdsaSha256, false);
                 dataset.Add(KeyingMaterial.JsonWebKeySymmetric256, SecurityAlgorithms.HmacSha256, true);
                 dataset.Add(KeyingMaterial.JsonWebKeySymmetric256, SecurityAlgorithms.RsaSha256Signature, false);
+                JsonWebKey testKey = new JsonWebKey
+                {
+                    Kty = JsonWebAlgorithmsKeyTypes.Octet,
+                    K = "Vbxq2mlbGJw8XH+ZoYBnUHmHga8/o/IduvU/Tht70iE="
+                };
+                testKey.CryptoProviderFactory.IsSupportedAlgorithm = ((key, algorithm) => { return false; });
+                dataset.Add(testKey, SecurityAlgorithms.HmacSha256, false);
                 return dataset;
             }
         }

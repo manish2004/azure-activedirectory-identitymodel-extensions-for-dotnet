@@ -59,9 +59,30 @@ namespace Microsoft.IdentityModel.Tokens
         /// </summary>
         public static CryptoProviderFactory Default;
 
+        /// <summary>
+        /// Static constructor that initializes the default <see cref="CryptoProviderFactory"/>.
+        /// </summary>
         static CryptoProviderFactory()
         {
             Default = new CryptoProviderFactory();
+        }
+
+        /// <summary>
+        /// Default constructor for <see cref="CryptoProviderFactory"/>.
+        /// </summary>
+        public CryptoProviderFactory() { }
+
+        /// <summary>
+        /// Constructor that creates a deep copy of given <see cref="CryptoProviderFactory"/> object.
+        /// </summary>
+        /// <param name="factory"><see cref="CryptoProviderFactory"/> to copy from.</param>
+        public CryptoProviderFactory(CryptoProviderFactory factory)
+        {
+            if (factory == null)
+                throw LogHelper.LogArgumentNullException(nameof(factory));
+
+            AsymmetricAlgorithmResolver = factory.AsymmetricAlgorithmResolver;
+            IsSupportedAlgorithm = factory.IsSupportedAlgorithm;
         }
 
         /// <summary>
@@ -69,6 +90,9 @@ namespace Microsoft.IdentityModel.Tokens
         /// </summary>
         public AsymmetricAlgorithmResolver AsymmetricAlgorithmResolver { get; set; }
 
+        /// <summary>
+        /// Delegate to check if the <see cref="SecurityKey"/> supports the given algorithm.
+        /// </summary>
         public IsSupportedAlgorithm IsSupportedAlgorithm { get; set; }
 
         /// <summary>

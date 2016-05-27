@@ -136,7 +136,6 @@ namespace Microsoft.IdentityModel.Tokens
 
             _minimumAsymmetricKeySizeInBitsForSigningMap = new Dictionary<string, int>(DefaultMinimumAsymmetricKeySizeInBitsForSigningMap);
             _minimumAsymmetricKeySizeInBitsForVerifyingMap = new Dictionary<string, int>(DefaultMinimumAsymmetricKeySizeInBitsForVerifyingMap);
-            ValidateAsymmetricSecurityKeySize(key, algorithm, willCreateSignatures);
             if (willCreateSignatures && !HasPrivateKey(key))
                 throw LogHelper.LogException<InvalidOperationException>(LogMessages.IDX10638, key);
 
@@ -166,6 +165,7 @@ namespace Microsoft.IdentityModel.Tokens
                 if (!key.IsSupportedAlgorithm(algorithm))
                     throw LogHelper.LogException<ArgumentException>(LogMessages.IDX10640, (algorithm ?? "null"));
 
+                ValidateAsymmetricSecurityKeySize(key, algorithm, willCreateSignatures);
                 ResolveAsymmetricAlgorithm(key, algorithm, willCreateSignatures);
             }
         }

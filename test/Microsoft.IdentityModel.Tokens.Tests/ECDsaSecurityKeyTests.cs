@@ -33,7 +33,7 @@ namespace Microsoft.IdentityModel.Tokens.Tests
 {
     public class ECDsaSecurityKeyTests
     {
-        [Fact(DisplayName = "ECDsaSecurityKeyTests: Constructor")]
+        [Fact]
         public void Constructor()
         {
             // testing constructor that takes ECDsa instance
@@ -56,7 +56,7 @@ namespace Microsoft.IdentityModel.Tokens.Tests
             }
         }
 
-        [Fact(DisplayName = "ECDsaSecurityKeyTests: Defaults")]
+        [Fact]
         public void Defaults()
         {
             // there are no defaults.
@@ -80,6 +80,9 @@ namespace Microsoft.IdentityModel.Tokens.Tests
                 dataset.Add(KeyingMaterial.ECDsa256Key_Public, SecurityAlgorithms.EcdsaSha256Signature, true);
                 dataset.Add(KeyingMaterial.ECDsa384Key, SecurityAlgorithms.Aes128Encryption, false);
                 dataset.Add(KeyingMaterial.ECDsa521Key, SecurityAlgorithms.EcdsaSha384, true);
+                ECDsaSecurityKey testKey = new ECDsaSecurityKey(KeyingMaterial.ECDsa256Key.ECDsa);
+                testKey.CryptoProviderFactory.IsSupportedAlgorithm = ((key, algorithm) => { return false; });
+                dataset.Add(testKey, SecurityAlgorithms.EcdsaSha256, false);
                 return dataset;
 
             }

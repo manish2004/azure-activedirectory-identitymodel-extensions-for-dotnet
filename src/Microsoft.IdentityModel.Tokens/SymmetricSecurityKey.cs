@@ -26,6 +26,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using Microsoft.IdentityModel.Logging;
 
 namespace Microsoft.IdentityModel.Tokens
 {
@@ -44,14 +45,10 @@ namespace Microsoft.IdentityModel.Tokens
         public SymmetricSecurityKey(byte[] key)
         {
             if (key == null)
-            {
-                throw new ArgumentNullException("key");
-            }
+                throw LogHelper.LogArgumentNullException(nameof(key));
 
             if (key.Length == 0)
-            {
-                throw new ArgumentException("SR.GetString(SR.SymmetricKeyLengthTooShort, symmetricKey.Length))");
-            }
+                throw LogHelper.LogException<ArgumentException>(LogMessages.IDX10703);
 
             _key = key.CloneByteArray();
             _keySize = _key.Length * 8;
@@ -90,6 +87,9 @@ namespace Microsoft.IdentityModel.Tokens
         {
             if (string.IsNullOrWhiteSpace(algorithm))
                 return false;
+
+            if (CryptoProviderFactory.IsSupportedAlgorithm != null)
+                return CryptoProviderFactory.IsSupportedAlgorithm(this, algorithm);
 
             switch (algorithm)
             {
