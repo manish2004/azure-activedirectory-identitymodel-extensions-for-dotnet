@@ -124,8 +124,8 @@ namespace Microsoft.IdentityModel.Tokens.Tests
                 dataset.Add(KeyingMaterial.RsaSecurityKeyWithCspProvider_2048, SecurityAlgorithms.EcdsaSha256, false);
                 dataset.Add(KeyingMaterial.RsaSecurityKey_2048, SecurityAlgorithms.RsaSha256Signature, true);
                 RsaSecurityKey testKey = new RsaSecurityKey(KeyingMaterial.RsaParameters1);
-                testKey.CryptoProviderFactory.IsSupportedAlgorithm = ((key, algorithm) => { return false; });
-                dataset.Add(testKey, SecurityAlgorithms.RsaSha256, false);
+                testKey.CryptoProviderFactory.AsymmetricAlgorithmResolver = ((key, algorithm, willCreateSignatures) => { return RSA.Create(); });
+                dataset.Add(testKey, SecurityAlgorithms.EcdsaSha256, true);
                 return dataset;
             }
         }

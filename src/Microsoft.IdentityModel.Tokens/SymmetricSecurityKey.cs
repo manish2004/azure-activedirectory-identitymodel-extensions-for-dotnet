@@ -88,8 +88,11 @@ namespace Microsoft.IdentityModel.Tokens
             if (string.IsNullOrWhiteSpace(algorithm))
                 return false;
 
-            if (CryptoProviderFactory.IsSupportedAlgorithm != null)
-                return CryptoProviderFactory.IsSupportedAlgorithm(this, algorithm);
+            if (CryptoProviderFactory.SymmetricAlgorithmResolver != null)
+            {
+                if (CryptoProviderFactory.SymmetricAlgorithmResolver(this, algorithm) != null)
+                    return true;
+            }
 
             switch (algorithm)
             {

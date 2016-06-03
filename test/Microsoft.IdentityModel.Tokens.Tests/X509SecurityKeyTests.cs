@@ -26,6 +26,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Xunit;
 
@@ -80,8 +81,8 @@ namespace Microsoft.IdentityModel.Tokens.Tests
                 dataset.Add(KeyingMaterial.X509SecurityKeySelfSigned2048_SHA512, SecurityAlgorithms.Aes128Encryption, false);
                 dataset.Add(KeyingMaterial.X509SecurityKeySelfSigned1024_SHA256, SecurityAlgorithms.RsaSha384, true);
                 X509SecurityKey testKey = new X509SecurityKey(KeyingMaterial.CertSelfSigned2048_SHA256);
-                testKey.CryptoProviderFactory.IsSupportedAlgorithm = ((key, algorithm) => { return false; });
-                dataset.Add(testKey, SecurityAlgorithms.RsaSha256Signature, false);
+                testKey.CryptoProviderFactory.AsymmetricAlgorithmResolver = ((key, algorithm, willCreateSignatures) => { return RSA.Create(); });
+                dataset.Add(testKey, SecurityAlgorithms.RsaSsaPssSha256Signature, true);
                 return dataset;
 
             }

@@ -81,8 +81,8 @@ namespace Microsoft.IdentityModel.Tokens.Tests
                 dataset.Add(KeyingMaterial.ECDsa384Key, SecurityAlgorithms.Aes128Encryption, false);
                 dataset.Add(KeyingMaterial.ECDsa521Key, SecurityAlgorithms.EcdsaSha384, true);
                 ECDsaSecurityKey testKey = new ECDsaSecurityKey(KeyingMaterial.ECDsa256Key.ECDsa);
-                testKey.CryptoProviderFactory.IsSupportedAlgorithm = ((key, algorithm) => { return false; });
-                dataset.Add(testKey, SecurityAlgorithms.EcdsaSha256, false);
+                testKey.CryptoProviderFactory.AsymmetricAlgorithmResolver = ((key, algorithm, willCreateSignatures) => { return new ECDsaCng(); });
+                dataset.Add(testKey, SecurityAlgorithms.RsaSsaPssSha256Signature, true);
                 return dataset;
 
             }

@@ -152,8 +152,11 @@ namespace Microsoft.IdentityModel.Tokens
             if (string.IsNullOrEmpty(algorithm))
                 return false;
 
-            if (CryptoProviderFactory.IsSupportedAlgorithm != null)
-                return CryptoProviderFactory.IsSupportedAlgorithm(this, algorithm);
+            if (CryptoProviderFactory.AsymmetricAlgorithmResolver != null)
+            {
+                if (CryptoProviderFactory.AsymmetricAlgorithmResolver(this, algorithm, false) != null)
+                    return true;
+            }
 
             switch (algorithm)
             {

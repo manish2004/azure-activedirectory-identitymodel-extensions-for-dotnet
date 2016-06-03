@@ -36,17 +36,17 @@ namespace Microsoft.IdentityModel.Tokens
     /// </summary>
     /// <param name="securityKey"><see cref="SecurityKey"/> to use for the crypto operations.</param>
     /// <param name="algorithm">Algorithm to use for the crypto operations</param>
-    /// <param name="willCreateSignatures">Whether this <see cref="AsymmetricSignatureProvider"/> is required to create signatures then set this to true.</param>
-    /// <returns><see cref="AsymmetricAlgorithm"/> To use for signing and/or verifying tokens.</returns>
+    /// <param name="willCreateSignatures">If this <see cref="AsymmetricSignatureProvider"/> is required to create signatures then set this to true.</param>
+    /// <returns><see cref="AsymmetricAlgorithm"/> to use for signing and/or verifying tokens.</returns>
     public delegate AsymmetricAlgorithm AsymmetricAlgorithmResolver(SecurityKey securityKey, string algorithm, bool willCreateSignatures);
 
     /// <summary>
-    /// Delegate to check if the <see cref="SecurityKey"/> supports the given algorithm.
+    /// Delegate to resolve <see cref="KeyedHashAlgorithm"/> to use when signing or verifying token.
     /// </summary>
-    /// <param name="securityKey"><see cref="SecurityKey"/> to check.</param>
-    /// <param name="algorithm">algorithm to check.</param>
-    /// <returns> true, if algorithm is supported by the key, false otherwise.</returns>
-    public delegate bool IsSupportedAlgorithm(SecurityKey securityKey, string algorithm);
+    /// <param name="securityKey"><see cref="SecurityKey"/> to use for the crypto operations.</param>
+    /// <param name="algorithm">Algorithm to use for the crypto operations</param>
+    /// <returns><see cref="HashAlgorithm"/> to use for signing and/or verifying tokens.</returns>
+    public delegate KeyedHashAlgorithm SymmetricAlgorithmResolver(SecurityKey securityKey, string algorithm);
 
     /// <summary>
     /// Creates <see cref="SignatureProvider"/>s by specifying a <see cref="SecurityKey"/> and algorithm.
@@ -82,7 +82,7 @@ namespace Microsoft.IdentityModel.Tokens
                 throw LogHelper.LogArgumentNullException(nameof(factory));
 
             AsymmetricAlgorithmResolver = factory.AsymmetricAlgorithmResolver;
-            IsSupportedAlgorithm = factory.IsSupportedAlgorithm;
+            SymmetricAlgorithmResolver = factory.SymmetricAlgorithmResolver;
         }
 
         /// <summary>
@@ -91,9 +91,9 @@ namespace Microsoft.IdentityModel.Tokens
         public AsymmetricAlgorithmResolver AsymmetricAlgorithmResolver { get; set; }
 
         /// <summary>
-        /// Delegate to check if the <see cref="SecurityKey"/> supports the given algorithm.
+        /// Delegate to resolve <see cref="KeyedHashAlgorithm"/> to use when signing or verifying token.
         /// </summary>
-        public IsSupportedAlgorithm IsSupportedAlgorithm { get; set; }
+        public SymmetricAlgorithmResolver SymmetricAlgorithmResolver { get; set; }
 
         /// <summary>
         /// Creates a <see cref="SignatureProvider"/> that supports the <see cref="SecurityKey"/> and algorithm.

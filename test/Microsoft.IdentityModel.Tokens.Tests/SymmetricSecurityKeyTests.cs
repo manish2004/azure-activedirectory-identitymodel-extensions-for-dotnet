@@ -26,6 +26,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Security.Cryptography;
 using Xunit;
 
 namespace Microsoft.IdentityModel.Tokens.Tests
@@ -78,11 +79,18 @@ namespace Microsoft.IdentityModel.Tokens.Tests
                 dataset.Add(KeyingMaterial.DefaultSymmetricSecurityKey_256, SecurityAlgorithms.HmacSha256, true);
                 dataset.Add(KeyingMaterial.SymmetricSecurityKey2_256, SecurityAlgorithms.HmacSha384Signature, true);
                 dataset.Add(KeyingMaterial.DefaultSymmetricSecurityKey_256, SecurityAlgorithms.Aes128Encryption, false);
-                SymmetricSecurityKey testKey = new SymmetricSecurityKey(KeyingMaterial.DefaultSymmetricKeyBytes_256);
-                testKey.CryptoProviderFactory.IsSupportedAlgorithm = ((key, algorithm) => { return false; });
-                dataset.Add(testKey, SecurityAlgorithms.HmacSha256Signature, false);
-                return dataset;
 
+                SymmetricSecurityKey testKey = new SymmetricSecurityKey(KeyingMaterial.DefaultSymmetricKeyBytes_256);
+                testKey.CryptoProviderFactory.SymmetricAlgorithmResolver = ((key, algorithm) => 
+                {
+                    byte[] keyBytes = null;
+                    SymmetricSecurityKey symmetricSecurityKey = key as SymmetricSecurityKey;
+                    if (symmetricSecurityKey != null)
+                        keyBytes = symmetricSecurityKey.Key;
+                    return new HMACSHA256(keyBytes);
+                });
+                dataset.Add(testKey, SecurityAlgorithms.Aes128Encryption, true);
+                return dataset;
             }
         }
     }

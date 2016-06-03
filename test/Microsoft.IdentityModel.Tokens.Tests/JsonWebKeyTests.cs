@@ -27,6 +27,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Xunit;
 
 namespace Microsoft.IdentityModel.Tokens.Tests
@@ -165,8 +166,8 @@ namespace Microsoft.IdentityModel.Tokens.Tests
                     Kty = JsonWebAlgorithmsKeyTypes.Octet,
                     K = "Vbxq2mlbGJw8XH+ZoYBnUHmHga8/o/IduvU/Tht70iE="
                 };
-                testKey.CryptoProviderFactory.IsSupportedAlgorithm = ((key, algorithm) => { return false; });
-                dataset.Add(testKey, SecurityAlgorithms.HmacSha256, false);
+                testKey.CryptoProviderFactory.AsymmetricAlgorithmResolver = ((key, algorithm, willCreateSignatures) => { return RSA.Create(); });
+                dataset.Add(testKey, SecurityAlgorithms.RsaSha256Signature, true);
                 return dataset;
             }
         }
