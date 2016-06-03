@@ -157,7 +157,7 @@ namespace Microsoft.IdentityModel.Tokens
 
             SymmetricSecurityKey symmetricKey = key as SymmetricSecurityKey;
             if (symmetricKey != null)
-                return new SymmetricSignatureProvider(symmetricKey, algorithm);
+                return new SymmetricSignatureProvider(symmetricKey, algorithm, SymmetricAlgorithmResolver);
 
             JsonWebKey jsonWebKey = key as JsonWebKey;
             if (jsonWebKey != null)
