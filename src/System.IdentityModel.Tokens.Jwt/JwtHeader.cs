@@ -38,6 +38,11 @@ namespace System.IdentityModel.Tokens.Jwt
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable"), System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Serialize not really supported.")]
     public class JwtHeader : Dictionary<string, object>
     {
+        private IDictionary<string, string> _outboundAlgorithmMap = null;
+        private object _outboundAlgorithmMapLock = new object();
+
+        public static IDictionary<string, string> DefaultOutboundAlgorithmMap = new Dictionary<string, string>();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="JwtHeader"/> class. Default string comparer <see cref="StringComparer.Ordinal"/>.
         /// </summary>
@@ -80,6 +85,25 @@ namespace System.IdentityModel.Tokens.Jwt
             get
             {
                 return this.GetStandardClaim(JwtHeaderParameterNames.Alg);
+            }
+        }
+
+        public IDictionary<string, string> OutboundAlgorithmMap
+        {
+            get
+            {
+                if (_outboundAlgorithmMap == null)
+                {
+                    lock (_outboundAlgorithmMapLock)
+                    {
+                        if (_outboundAlgorithmMapLock == null)
+                        {
+                            _outboundAlgorithmMap = new Dictionary<string, string>(DefaultOutboundAlgorithmMap);
+                        }
+                    }
+                }
+
+                return _outboundAlgorithmMap;
             }
         }
 
