@@ -95,7 +95,6 @@ namespace Microsoft.IdentityModel.Tokens
         private TimeSpan _clockSkew = DefaultClockSkew;
         private string _nameClaimType = ClaimsIdentity.DefaultNameClaimType;
         private string _roleClaimType = ClaimsIdentity.DefaultRoleClaimType;
-        private CryptoProviderFactory _cryptoProviderFactory = CryptoProviderFactory.Default;
 
         /// <summary>
         /// This is the fallback authenticationtype that a <see cref="ISecurityTokenValidator"/> will use if nothing is set.
@@ -188,8 +187,7 @@ namespace Microsoft.IdentityModel.Tokens
         /// </remarks>
         public AudienceValidator AudienceValidator
         {
-            get;
-            set;
+            get; set;
         }
 
         /// <summary>
@@ -298,17 +296,7 @@ namespace Microsoft.IdentityModel.Tokens
         /// </summary>
         public CryptoProviderFactory CryptoProviderFactory
         {
-            get
-            {
-                return _cryptoProviderFactory;
-            }
-            set
-            {
-                if (value == null)
-                    throw LogHelper.LogArgumentNullException("value");
-
-                _cryptoProviderFactory = value;
-            }
+            get; set;
         }
 
         /// <summary>
@@ -373,11 +361,7 @@ namespace Microsoft.IdentityModel.Tokens
         /// If set, this delegate will be called to validate the lifetime of the token, instead of normal processing.
         /// If <see cref="ValidateLifetime"/> is false, this delegate will not be called.
         /// </remarks>
-        public LifetimeValidator LifetimeValidator
-        {
-            get;
-            set;
-        }
+        public LifetimeValidator LifetimeValidator { get; set; }
 
         /// <summary>
         /// Gets or sets a <see cref="string"/> that defines the <see cref="ClaimsIdentity.NameClaimType"/>.
@@ -453,11 +437,7 @@ namespace Microsoft.IdentityModel.Tokens
         /// </summary>
         /// <remarks>The runtime will consult this value and save the orginal token that was validated.</remarks>
         [DefaultValue(false)]
-        public bool SaveSigninToken
-        {
-            get;
-            set;
-        }
+        public bool SaveSigninToken { get; set; }
 
         /// <summary>
         /// Gets or sets a delegate that will be used to validate the signature of the token.
